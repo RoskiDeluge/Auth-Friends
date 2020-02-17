@@ -5,7 +5,7 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 const FriendsList = () => {
     const [ friends, setFriends ] = useState([]);
     const [ newFriend, setNewFriend ] = useState({
-        id: 1,
+        id: Date.now(),
         name: 'Joe',
         age: 24,
         email: 'joe@lambdaschool.com'
@@ -31,11 +31,9 @@ const FriendsList = () => {
           .post("/friends", newFriend)
           .then(res => {
             // console.log(res);
-            // localStorage.setItem("token", res.data.payload);
             setFriends(res.data);
           })
           .catch(err => {
-            localStorage.removeItem("token");
             console.log("invalid friend: ", err);
           });
       };
