@@ -4,6 +4,12 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 const FriendsList = () => {
     const [ friends, setFriends ] = useState([]);
+    const [ newFriend, setNewFriend ] = useState({
+        id: 1,
+        name: 'Joe',
+        age: 24,
+        email: 'joe@lambdaschool.com'
+    });
 
     useEffect(() => {
         getData();
@@ -19,11 +25,56 @@ const FriendsList = () => {
         .catch(err => console.error(err));
     };
 
+    const addFriend = e => {
+        e.preventDefault();
+        axiosWithAuth()
+          .post("/friends", newFriend)
+          .then(res => {
+            // console.log(res);
+            // localStorage.setItem("token", res.data.payload);
+            setFriends(res.data);
+          })
+          .catch(err => {
+            localStorage.removeItem("token");
+            console.log("invalid friend: ", err);
+          });
+      };
+
+    const handleChange = e => {
+        setNewFriend({
+            ...newFriend,
+            [e.target.name]: e.target.value,
+        })
+    }
+
+
+
     return (
         <div>
             {friends.map(friend => {
                 return <div>{friend.name}</div>
             })}
+            <form onSubmit={addFriend} >
+                <input
+                type="text"
+                name="name"
+                value={newFriend.name}
+                onChange={handleChange}
+                />
+                <input
+                type="text"
+                name="age"
+                value={newFriend.age}
+                onChange={handleChange}
+                />
+                <input
+                type="text"
+                name="email"
+                value={newFriend.email}
+                onChange={handleChange}
+                />
+                <button>Add Friend</button>
+            </form>
         </div>
     )
 }
