@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import Loader from "react-loader-spinner";
 
 
 const Login = props => {
@@ -7,6 +8,11 @@ const Login = props => {
     username: "",
     password: ""
   });
+  const [ loading, setLoading ] = useState(false);
+
+  const isLoading = () => {
+    setLoading(true);
+  }
 
   const handleChange = e => {
     setCredentials({
@@ -31,7 +37,13 @@ const Login = props => {
 
   return (
     <div>
-      <form onSubmit={login}>
+      {loading && (
+          <div>
+            <Loader type="Puff" color="#204963" height="60" width="60" />
+            <p>Logging you in now...</p>
+          </div>
+        )}
+      <form onSubmit={login} >
         <input
           type="text"
           name="username"
@@ -44,7 +56,7 @@ const Login = props => {
           value={credentials.password}
           onChange={handleChange}
         />
-        <button>Log in</button>
+        <button onClick={isLoading}>Log in</button>
       </form>
     </div>
   )
