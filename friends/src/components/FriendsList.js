@@ -6,9 +6,9 @@ const FriendsList = () => {
     const [ friends, setFriends ] = useState([]);
     const [ newFriend, setNewFriend ] = useState({
         id: Date.now(),
-        name: 'Joe',
-        age: 24,
-        email: 'joe@lambdaschool.com'
+        name: "",
+        age: "",
+        email: ""
     });
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const FriendsList = () => {
     return (
         <div>
             {friends.map(friend => {
-                return <div>{friend.name}</div>
+                return <div key={friend.id}>{friend.name}</div>
             })}
             <form onSubmit={addFriend} >
                 <input

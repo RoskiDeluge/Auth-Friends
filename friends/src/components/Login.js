@@ -8,10 +8,10 @@ const Login = props => {
     username: "",
     password: ""
   });
-  const [ loading, setLoading ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
 
-  const isLoading = () => {
-    setLoading(true);
+  const loading = () => {
+    setIsLoading(true);
   }
 
   const handleChange = e => {
@@ -37,9 +37,9 @@ const Login = props => {
 
   return (
     <div>
-      {loading && (
+      {isLoading && (
           <div>
-            <Loader type="Puff" color="#204963" height="60" width="60" />
+            <Loader type="Puff" color="#204963" height={60} width={60} />
             <p>Logging you in now...</p>
           </div>
         )}
@@ -56,7 +56,7 @@ const Login = props => {
           value={credentials.password}
           onChange={handleChange}
         />
-        <button onClick={isLoading}>Log in</button>
+        <button onClick={loading}>Log in</button>
       </form>
     </div>
   )
